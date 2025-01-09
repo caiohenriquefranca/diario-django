@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block 'title' %}{% endblock 'title' %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=polymer"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% block 'head' %}{% endblock 'head' %}
+  </head>
+  <body>
+    <header class="slat-50">
+      <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <div
+          class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between"
+        >
+          <div>
+            <img class="h-12 w-full" src="{% static "logo.png" %}" alt="Diário
+            Online">
+          </div>
+
+          <div class="flex items-center gap-4">
+            <button
+              class="inline-flex items-center justify-center gap-1.5 rounded border border-gray-200 hover:border-violet-700 bg-white px-5 py-3 text-gray-900 hover:text-violet-700 transition hover:text-gray-700 focus:outline-none focus:ring"
+              type="button"
+            >
+              <span class="text-sm font-medium"> Entrar </span>
+            </button>
+
+            <button
+              class="inline-block rounded bg-violet-700 px-5 py-3 text-sm font-medium text-white transition hover:bg-violet-600 focus:outline-none focus:ring"
+              type="button"
+            >
+              Registrar-se
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    {% block 'body' %}{% endblock 'body' %}
+  </body>
+</html>
