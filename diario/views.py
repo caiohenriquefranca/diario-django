@@ -1,10 +1,18 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Pessoa, Diario
+from datetime import datetime, timedelta
 
 def home(request):
     textos = Diario.objects.all().order_by('create_at')[:3]
-    return render(request, 'home.html', {'textos': textos})
+    pessoas = Pessoa.objects.all()
+    nomes = [pessoa.nome for pessoa in pessoas]
+    qtds = []
+    for pessoa in pessoas:
+        qtd = Diario.objects.filter(pessoas=pessoa).count()
+        qtds.append(qtd)
+
+    return render(request, 'home.html', {'textos': textos, 'nomes': nomes, "qtds": qtds})
 
 def escrever(request):
     if request.method == 'GET':
@@ -50,4 +58,12 @@ def cadastrar_pessoa(request):
         return redirect('escrever')
 
 def dia(request):
-    return render(request,'dia.html') 
+    data = request.GET.get('data')
+    data_formatada = datetime.strptime(data, '%Y-%m-%d')
+    diarios = Diario.objects.filter(create_at__gte=data_formatada).filter(create_at__lte=data_formatada+timedelta(days=1))
+    return render(request,'dia.html', {'diarios':diarios, 'total': diarios.count(), 'data':data})
+
+def excluir_dia(request):
+    dia = datetime.strptime(request.GET.get('data'), '%Y-%m-%d')
+    diarios = Diario.objects.filter(create_at__gte=dia).filter(create_at__lte=dia+timedelta(days=1))
+    diarios.delete()
